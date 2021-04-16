@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/firstLibrary"
+            android:title="電子書服務平台(國立公共資訊圖書)"/>
+    </group>
+</menu>
