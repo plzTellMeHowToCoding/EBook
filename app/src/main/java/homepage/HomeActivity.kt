@@ -2,6 +2,7 @@ package homepage
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -10,8 +11,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.tabs.TabLayout
 import com.vincent.ebook.R
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.frag_book.*
 import kotlinx.android.synthetic.main.home_nav_header.*
 import utils.Book
 
@@ -24,18 +27,80 @@ class HomeActivity : AppCompatActivity() {
 
     val books = mutableListOf(Book("A","A","A",R.drawable.apple),Book("B","B","B",R.drawable.banana),
                                                 Book("C","C","C",R.drawable.cherry), Book("D","D","D",R.drawable.grape),
-                                                Book("E","E","E",R.drawable.mango)
-    )
+                                                Book("E","E","E",R.drawable.mango))
     val bookList = ArrayList<Book>()
+
+    private val bookFrag = BookFragment()
+    private val magazineFrag = MagazineFragment()
+    private var currentPosition = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         initToolbar()
         initNavView()
-        initRecyclerView()
+        //initRecyclerView()
+        initFrags()
+        initTabLayout()
     }
 
+    private fun initFrags(){
+        val fragManager = supportFragmentManager
+        val fragTransaction = fragManager.beginTransaction()
+        fragTransaction.add(R.id.home_display_content_area,bookFrag,"Book")
+        fragTransaction.add(R.id.home_display_content_area,magazineFrag,"Magazine")
+        fragTransaction.hide(magazineFrag)
+        fragTransaction.commit()
+    }
+
+    private fun initTabLayout(){
+        home_tab.addOnTabSelectedListener(
+            object : TabLayout.OnTabSelectedListener{
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+                    //tab?.let {
+                    //    switchFragment(tab.position)
+                    //}
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
+                    //tab?.let {
+                    //    switchFragment(tab.position)
+                    //}
+                }
+
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    tab?.let {
+                        switchFragment(tab.position)
+                    }
+                }
+
+            }
+        )
+    }
+
+    private fun switchFragment(position : Int){
+        val fragManager = supportFragmentManager
+        val fragTransaction = fragManager.beginTransaction()
+        when(currentPosition){
+            0 -> {
+                fragTransaction.hide(bookFrag)
+            }
+            1 -> {
+                fragTransaction.hide(magazineFrag)
+            }
+        }
+        when(position){
+            0 -> {
+                fragTransaction.show(bookFrag)
+            }
+
+            1 -> {
+                fragTransaction.show(magazineFrag)
+            }
+        }
+        fragTransaction.commit()
+        currentPosition = position
+    }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_home_toolbar,menu)
         menu?.let {
@@ -131,7 +196,7 @@ class HomeActivity : AppCompatActivity() {
         initBookList()
         val layoutManager = GridLayoutManager(this,3)
         val adapter = BookAdapter(this,bookList)
-        home_book_list.layoutManager = layoutManager
-        home_book_list.adapter = adapter
+        home_frag_book_list.layoutManager = layoutManager
+        home_frag_book_list.adapter = adapter
     }
 }
