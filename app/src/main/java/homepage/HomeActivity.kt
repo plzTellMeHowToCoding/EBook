@@ -2,7 +2,6 @@ package homepage
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -10,13 +9,10 @@ import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GravityCompat
-import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.vincent.ebook.R
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.frag_book.*
 import kotlinx.android.synthetic.main.home_nav_header.*
-import utils.Book
 
 /**
  *  顯示主頁
@@ -24,11 +20,6 @@ import utils.Book
  * */
 
 class HomeActivity : AppCompatActivity() {
-
-    val books = mutableListOf(Book("A","A","A",R.drawable.apple),Book("B","B","B",R.drawable.banana),
-                                                Book("C","C","C",R.drawable.cherry), Book("D","D","D",R.drawable.grape),
-                                                Book("E","E","E",R.drawable.mango))
-    val bookList = ArrayList<Book>()
 
     private val bookFrag = BookFragment()
     private val magazineFrag = MagazineFragment()
@@ -182,21 +173,5 @@ class HomeActivity : AppCompatActivity() {
     private fun setNavHeaderItemTextAndVisible(title : String, showOrNot:Int){
         home_nav_header_edit.text = title
         home_nav_header_remove.visibility = showOrNot
-    }
-
-    private fun initBookList(){
-        bookList.clear()
-        repeat(50){
-            val index = (0 until books.size).random()
-            bookList.add(books[index])
-        }
-    }
-
-    private fun initRecyclerView(){
-        initBookList()
-        val layoutManager = GridLayoutManager(this,3)
-        val adapter = BookAdapter(this,bookList)
-        home_frag_book_list.layoutManager = layoutManager
-        home_frag_book_list.adapter = adapter
     }
 }
