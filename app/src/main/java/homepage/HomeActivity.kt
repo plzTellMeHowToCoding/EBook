@@ -2,6 +2,8 @@ package homepage
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -10,9 +12,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.firestore.FirebaseFirestore
 import com.vincent.ebook.R
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.home_nav_header.*
+import kotlinx.android.synthetic.main.home_tab_detail_item.*
+import utils.Book
 
 /**
  *  顯示主頁
@@ -24,7 +29,8 @@ class HomeActivity : AppCompatActivity() {
     private val bookFrag = BookFragment()
     private val magazineFrag = MagazineFragment()
     private var currentPosition = 0
-
+    private val tabTitles = arrayOf("圖書","雜誌")
+    private val tabDetails = arrayOf("新到圖書","全部","目前可借","D","E","F","G","H","I","J","K","L","M","N")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -33,6 +39,26 @@ class HomeActivity : AppCompatActivity() {
         //initRecyclerView()
         initFrags()
         initTabLayout()
+        initTabDetailLayout()
+        /**
+         *  測試讀取 & 寫入 firebase，先暫時留在這，等之後要讀寫 data 時再搬去合宜的區塊
+        //val firestore = FirebaseFirestore.getInstance()
+        //val book = Book("First","vincent","non",R.drawable.apple)
+        //firestore.collection("Books").document("First").set(book)
+        //    .addOnSuccessListener { Log.d("TAG", "DocumentSnapshot successfully written!") }
+        //    .addOnFailureListener { e -> Log.w("TAG", "Error writing document", e) }
+        firestore.collection("Books").document("First").get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    Log.d("TAG", "DocumentSnapshot data: ${document.data}")
+                } else {
+                    Log.d("TAG", "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("TAG", "get failed with ", exception)
+            }
+        */
     }
 
     private fun initFrags(){
@@ -45,6 +71,13 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun initTabLayout(){
+        // 初始化 tab 名稱
+        for(i in tabTitles.indices){
+            home_tab.addTab(home_tab.newTab())
+            home_tab.getTabAt(i)?.text = tabTitles[i]
+        }
+        // 隱藏選中的 tablayout 的底線
+        home_tab.setSelectedTabIndicator(0)
         home_tab.addOnTabSelectedListener(
             object : TabLayout.OnTabSelectedListener{
                 override fun onTabReselected(tab: TabLayout.Tab?) {
@@ -67,6 +100,17 @@ class HomeActivity : AppCompatActivity() {
 
             }
         )
+    }
+
+    private fun initTabDetailLayout(){
+        for(i in tabDetails.indices){
+            val tab = home_tab_detail.newTab()
+            val view = LayoutInflater.from(this).inflate(R.layout.home_tab_detail_item,home_tab_detail,false)
+            val tvCategory = view.findViewById<TextView>(R.id.tab_detail_category)
+            tvCategory.text = tabDetails[i]
+            tab.customView = view
+            home_tab_detail.addTab(tab)
+        }
     }
 
     private fun switchFragment(position : Int){
