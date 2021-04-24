@@ -7,16 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.vincent.ebook.R
+import kotlinx.android.synthetic.main.frag_book.*
 import kotlinx.android.synthetic.main.frag_magazine.*
 import utils.Book
 
+/**
+ *  日後可考慮抽出 baseFragment 類別，將諸如 setCategoryList , setContentList 方法提出來寫
+ *  2021.04.23 vincent
+ */
+
 class MagazineFragment : Fragment(){
-    val books = mutableListOf(
-        Book("AA","A","A", R.drawable.apple), Book("BB","B","B", R.drawable.banana),
-        Book("CC","C","C", R.drawable.cherry), Book("DD","D","D", R.drawable.grape),
-        Book("EE","E","E", R.drawable.mango)
-    )
-    val bookList = ArrayList<Book>()
+    private val contentList = ArrayList<Book>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.frag_magazine,container,false)
@@ -27,10 +28,10 @@ class MagazineFragment : Fragment(){
         initRecyclerView()
     }
     private fun initBookList(){
-        bookList.clear()
+        //bookList.clear()
         repeat(50){
-            val index = (0 until books.size).random()
-            bookList.add(books[index])
+            val index = (0 until bookList.size).random()
+            contentList.add(bookList[index])
         }
     }
 
@@ -39,9 +40,28 @@ class MagazineFragment : Fragment(){
         if(activity != null) {
             val homeActivity = activity as HomeActivity
             val layoutManager = GridLayoutManager(homeActivity,3)
-            val adapter = BookAdapter(homeActivity, bookList)
+            val adapter = BookAdapter(homeActivity, contentList)
             home_frag_magazine_list.layoutManager = layoutManager
             home_frag_magazine_list.adapter = adapter
+        }
+    }
+
+    // 初始化分類的 tab
+    /**private fun initTabCategory(){
+        for(i in tabDetails.indices){
+            frag_magazine_tab_category.addTab(frag_magazine_tab_category.newTab())
+            frag_magazine_tab_category.getTabAt(i)?.text = tabDetails[i]
+        }
+    }*/
+
+    companion object {
+        private var tabDetails = mutableListOf<String>()
+        private var bookList = mutableListOf<Book>()
+        fun setCategoryList(categoryList: Array<String>) {
+            tabDetails = categoryList.toMutableList()
+        }
+        fun setContentList(books : List<Book>){
+            bookList = books.toMutableList()
         }
     }
 }

@@ -10,14 +10,14 @@ import com.vincent.ebook.R
 import kotlinx.android.synthetic.main.frag_book.*
 import utils.Book
 
+/**
+ *  日後可考慮抽出 baseFragment 類別，將諸如 setCategoryList , setContentList 方法提出來寫
+ *  2021.04.23 vincent
+ */
+
 class BookFragment : Fragment() {
 
-    val books = mutableListOf(
-        Book("A","A","A",R.drawable.apple), Book("B","B","B",R.drawable.banana),
-        Book("C","C","C",R.drawable.cherry), Book("D","D","D",R.drawable.grape),
-        Book("E","E","E",R.drawable.mango)
-    )
-    val bookList = ArrayList<Book>()
+    private val contentList = arrayListOf<Book>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.frag_book,container,false)
@@ -28,10 +28,9 @@ class BookFragment : Fragment() {
         initRecyclerView()
     }
     private fun initBookList(){
-        bookList.clear()
         repeat(50){
-            val index = (0 until books.size).random()
-            bookList.add(books[index])
+            val index = (0 until bookList.size).random()
+            contentList.add(bookList[index])
         }
     }
 
@@ -40,9 +39,28 @@ class BookFragment : Fragment() {
         if(activity != null) {
             val homeActivity = activity as HomeActivity
             val layoutManager = GridLayoutManager(homeActivity,3)
-            val adapter = BookAdapter(homeActivity, bookList)
+            val adapter = BookAdapter(homeActivity, contentList)
             home_frag_book_list.layoutManager = layoutManager
             home_frag_book_list.adapter = adapter
+        }
+    }
+
+    // 初始化分類的 tab
+    /**private fun initTabCategory(){
+        for(i in tabDetails.indices){
+            frag_book_tab_category.addTab(frag_book_tab_category.newTab())
+            frag_book_tab_category.getTabAt(i)?.text = tabDetails[i]
+        }
+    }*/
+
+    companion object {
+        private var tabDetails = mutableListOf<String>()
+        private var bookList = mutableListOf<Book>()
+        fun setCategoryList(categoryList: Array<String>) {
+            tabDetails = categoryList.toMutableList()
+        }
+        fun setContentList(books : List<Book>){
+            bookList = books.toMutableList()
         }
     }
 }
