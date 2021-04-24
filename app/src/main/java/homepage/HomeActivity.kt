@@ -11,12 +11,11 @@ import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GravityCompat
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import com.google.firebase.firestore.FirebaseFirestore
 import com.vincent.ebook.R
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.home_nav_header.*
-import kotlinx.android.synthetic.main.home_tab_detail_item.*
 import utils.Book
 
 /**
@@ -26,20 +25,23 @@ import utils.Book
 
 class HomeActivity : AppCompatActivity() {
 
-    private val bookFrag = BookFragment()
-    private val magazineFrag = MagazineFragment()
-    private var currentPosition = 0
     private val tabTitles = arrayOf("圖書","雜誌")
-    private val tabDetails = arrayOf("新到圖書","全部","目前可借","D","E","F","G","H","I","J","K","L","M","N")
+    private var tabDetails = arrayOf("新到圖書","全部","目前可借","D","E","F","G","H","I","J","K","L","M","N")
+    val books = mutableListOf(
+        Book("A","A","A",R.drawable.apple), Book("B","B","B",R.drawable.banana),
+        Book("C","C","C",R.drawable.cherry), Book("D","D","D",R.drawable.grape),
+        Book("E","E","E",R.drawable.mango)
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         initToolbar()
         initNavView()
-        //initRecyclerView()
-        initFrags()
-        initTabLayout()
-        initTabDetailLayout()
+        initViewPagerContent()
+        BookFragment.setContentList(books)
+        MagazineFragment.setContentList(books)
+        initTabCategoryLayout()
         /**
          *  測試讀取 & 寫入 firebase，先暫時留在這，等之後要讀寫 data 時再搬去合宜的區塊
         //val firestore = FirebaseFirestore.getInstance()
@@ -61,40 +63,53 @@ class HomeActivity : AppCompatActivity() {
         */
     }
 
-    private fun initFrags(){
-        val fragManager = supportFragmentManager
-        val fragTransaction = fragManager.beginTransaction()
-        fragTransaction.add(R.id.home_display_content_area,bookFrag,"Book")
-        fragTransaction.add(R.id.home_display_content_area,magazineFrag,"Magazine")
-        fragTransaction.hide(magazineFrag)
-        fragTransaction.commit()
-    }
 
-    private fun initTabLayout(){
-        // 初始化 tab 名稱
-        for(i in tabTitles.indices){
-            home_tab.addTab(home_tab.newTab())
-            home_tab.getTabAt(i)?.text = tabTitles[i]
-        }
+    // 初始化要顯示在 viewPager 裡的內容
+    private fun initViewPagerContent(){
+        val bookContentAdapter = ViewPagerContentAdapter(tabTitles,supportFragmentManager)
+        home_view_pager_content_area.adapter = bookContentAdapter
+        home_tab.setupWithViewPager(home_view_pager_content_area)
         // 隱藏選中的 tablayout 的底線
         home_tab.setSelectedTabIndicator(0)
-        home_tab.addOnTabSelectedListener(
-            object : TabLayout.OnTabSelectedListener{
-                override fun onTabReselected(tab: TabLayout.Tab?) {
-                    //tab?.let {
-                    //    switchFragment(tab.position)
-                    //}
-                }
+        home_view_pager_content_area.addOnPageChangeListener(object :
+            ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+                Log.d("TAG", "@@@@ onPageScrollStateChanged: ")
+            }
 
-                override fun onTabUnselected(tab: TabLayout.Tab?) {
-                    //tab?.let {
-                    //    switchFragment(tab.position)
-                    //}
-                }
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                Log.d("TAG", "@@@@ onPageScrolled: ")
+            }
+
+            /**
+             *  每當 viewpager 觸發換頁動作（ex. 圖書 -> 雜誌），會呼叫 onPageSelected 方法
+             *  故在這方法中去重新設置 home_tab_category 分類
+             */
+            override fun onPageSelected(position: Int) {
+                home_tab_category.removeAllTabs()
+                tabDetails.reverse()
+                initTabCategoryContent(tabDetails)
+            }
+        })
+    }
+
+    // 監聽 tab 的點擊事件
+    private fun initTabCategoryLayout(){
+        home_tab_category.setSelectedTabIndicator(0)
+        initTabCategoryContent(tabDetails)
+        home_tab_category.addOnTabSelectedListener(
+            object : TabLayout.OnTabSelectedListener{
+                override fun onTabReselected(tab: TabLayout.Tab?) {}
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {}
 
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     tab?.let {
-                        switchFragment(tab.position)
+                        Log.d("TAG", "Clicked ${tab?.position}")
                     }
                 }
 
@@ -102,40 +117,17 @@ class HomeActivity : AppCompatActivity() {
         )
     }
 
-    private fun initTabDetailLayout(){
+    // 初始化 tab 分類
+    private fun initTabCategoryContent(tabDetails : Array<String>){
         for(i in tabDetails.indices){
-            val tab = home_tab_detail.newTab()
-            val view = LayoutInflater.from(this).inflate(R.layout.home_tab_detail_item,home_tab_detail,false)
-            val tvCategory = view.findViewById<TextView>(R.id.tab_detail_category)
-            tvCategory.text = tabDetails[i]
+            val tab = home_tab_category.newTab()
+            val view = LayoutInflater.from(this).inflate(R.layout.home_tab_category,null)
+            view.findViewById<TextView>(R.id.home_tab_category_tv).text = tabDetails[i]+"\n"+"(2000)"
             tab.customView = view
-            home_tab_detail.addTab(tab)
+            home_tab_category.addTab(tab)
         }
     }
 
-    private fun switchFragment(position : Int){
-        val fragManager = supportFragmentManager
-        val fragTransaction = fragManager.beginTransaction()
-        when(currentPosition){
-            0 -> {
-                fragTransaction.hide(bookFrag)
-            }
-            1 -> {
-                fragTransaction.hide(magazineFrag)
-            }
-        }
-        when(position){
-            0 -> {
-                fragTransaction.show(bookFrag)
-            }
-
-            1 -> {
-                fragTransaction.show(magazineFrag)
-            }
-        }
-        fragTransaction.commit()
-        currentPosition = position
-    }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_home_toolbar,menu)
         menu?.let {
