@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import homepage.HomeActivity
+import Homepage.HomeActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
         override fun handleMessage(msg: Message) {
             val intent = Intent(activity,HomeActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 
