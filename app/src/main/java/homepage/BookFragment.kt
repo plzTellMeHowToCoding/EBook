@@ -1,4 +1,4 @@
-package homepage
+package Homepage
 
 import android.os.Bundle
 import android.view.LayoutInflater

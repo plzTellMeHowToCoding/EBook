@@ -1,4 +1,4 @@
-package homepage
+package Homepage
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.vincent.ebook.R
-import kotlinx.android.synthetic.main.frag_book.*
 import kotlinx.android.synthetic.main.frag_magazine.*
 import utils.Book
 

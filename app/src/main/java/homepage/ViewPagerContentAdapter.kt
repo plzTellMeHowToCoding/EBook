@@ -1,16 +1,9 @@
-package homepage
+package Homepage
 
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.material.tabs.TabLayout
-import com.vincent.ebook.R
-import kotlinx.android.synthetic.main.frag_book.view.*
 
 
 class ViewPagerContentAdapter(private val titleList: Array<String>, fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
