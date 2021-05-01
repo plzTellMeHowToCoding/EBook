@@ -1,14 +1,35 @@
 package utils
 
+import android.net.Uri
+
 /**
- *  存放電子書相關資料，預計要有以下幾項資訊
+ *  存放電子書相關資料：
  *  @param name 書名
  *  @param author 作者
+ *  @param version 版次
+ *  @param publishDate 出版日期
  *  @param publisher 出版社
- *  @param bookImageId 書的圖片ID
+ *  @param size 書的尺寸
+ *  @param isbn ISBN
+ *  @param translator 譯者
+ *  @param relatedLink 書本的相關連結（未來可放導向至其他網頁的連結，如：博客來、金石堂等）
+ *  @param uri 圖片上傳至雲端的連結
+ *
+ *  ============== 日後可多增加以下欄位 ==============
  *  4. 是否可外借
  *  5. 分類
- *  @author vincent - created on 16, April, 2021
+ *  ============== 日後可多增加以上欄位 ==============
+ *
+ *  vincent - created on 16, April, 2021
  * */
-class Book(val name : String, val author : String, val publisher : String, val bookImageId : Int) {
+class Book(val name : String,
+           val author : String,
+           val version : Int,
+           val publishDate : Int,
+           val publisher : String,
+           val size : String,
+           val isbn : String,
+           val translator : String,
+           val relatedLink : String,
+           val uri : String) {
 }
