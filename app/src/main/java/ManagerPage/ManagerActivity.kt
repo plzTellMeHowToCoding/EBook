@@ -1,30 +1,21 @@
 package ManagerPage
 
 import android.app.Activity
-import android.app.Application
-import android.app.ProgressDialog
-import android.content.ContentResolver
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
-import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.vincent.ebook.R
@@ -32,9 +23,6 @@ import kotlinx.android.synthetic.main.activity_manager.*
 import kotlinx.android.synthetic.main.view_upload_book.*
 import utils.Book
 import java.io.File
-import java.lang.Exception
-import java.text.SimpleDateFormat
-import java.util.*
 
 class ManagerActivity : AppCompatActivity() {
 
@@ -44,7 +32,6 @@ class ManagerActivity : AppCompatActivity() {
     private lateinit var uploadBookImageUri : Uri
     private val firestore = FirebaseFirestore.getInstance()
     private val storageRef = FirebaseStorage.getInstance().reference
-    private lateinit var downloadImageUri : Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,19 +44,18 @@ class ManagerActivity : AppCompatActivity() {
 
         manager_button_submit.setOnClickListener {
             uploadBookImage()
-            if(this::downloadImageUri.isInitialized) {
-                uploadBookInfo(downloadImageUri.toString())
-            }
         }
         manager_button_cancel.setOnClickListener {
 
         }
     }
 
+    /**
+     *  將使用者輸入的圖書資訊上傳至雲端
+     *  先取出各個 edittext 的 value，再判斷是否為空，若不為空的話就可以上傳
+     */
+
     private fun uploadBookInfo(downloadUri : String) {
-        /**
-         *  測試讀取 & 寫入 firebase，先暫時留在這，等之後要讀寫 data 時再搬去合宜的區塊
-         *  */
 
         val name = manager_edit_name.text.toString()
         val author = manager_edit_author.text.toString()
@@ -102,24 +88,28 @@ class ManagerActivity : AppCompatActivity() {
                 relatedLink,
                 downloadUri)
 
-            firestore.collection("BooksCollection").document("Book").set(book)
+            firestore.collection("BooksCollection").document("Book2").set(book)
                 .addOnSuccessListener {
                     Toast.makeText(this,"upload success",Toast.LENGTH_SHORT).show()
+                    Log.d("TAG", "@@@@ upload info success")
                 }
                 .addOnFailureListener {
                     Toast.makeText(this,"upload Fail",Toast.LENGTH_SHORT).show()
+                    Log.d("TAG", "@@@@ upload info fail")
                 }
         }
     }
+
+    /**
+     *  此方法在成功上傳圖片至 firebase 後會呼叫 uploadBookInfo
+     */
 
     private fun uploadBookImage(){
 
         val riversRef = storageRef.child(uploadBookImageUri.lastPathSegment ?: "")
         riversRef.putFile(uploadBookImageUri).addOnSuccessListener {
-            Log.d("TAG", "@@@ upload success ")
             it.storage.downloadUrl.addOnSuccessListener {
-                downloadImageUri = it
-                //uploadBookInfo(it)
+                uploadBookInfo(it.toString())
             }
             manager_upload_progress.visibility = View.GONE
         }.addOnFailureListener {
@@ -129,11 +119,13 @@ class ManagerActivity : AppCompatActivity() {
             if(manager_upload_progress.visibility == View.GONE){
                 manager_upload_progress.visibility = View.VISIBLE
                 manager_upload_progress.progress = progress
-                Log.d("TAG", "@@@@ progress = $progress")
                 if(progress >= 100){
                     manager_upload_progress.visibility = View.GONE
                 }
             }
+            // 按下上傳後會自動將畫面滾動至最上方，方便查看上傳的進度
+            manager_nested_scroll_view.fullScroll(View.FOCUS_UP)
+            manager_nested_scroll_view.scrollTo(0,0)
         }
     }
 
