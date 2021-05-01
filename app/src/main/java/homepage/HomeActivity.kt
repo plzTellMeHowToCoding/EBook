@@ -27,11 +27,11 @@ class HomeActivity : AppCompatActivity() {
 
     private val tabTitles = arrayOf("圖書","雜誌")
     private var tabDetails = arrayOf("新到圖書","全部","目前可借","D","E","F","G","H","I","J","K","L","M","N")
-    val books = mutableListOf(
+    /*val books = mutableListOf(
         Book("A","A","A",R.drawable.apple), Book("B","B","B",R.drawable.banana),
         Book("C","C","C",R.drawable.cherry), Book("D","D","D",R.drawable.grape),
         Book("E","E","E",R.drawable.mango)
-    )
+    )*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,28 +39,9 @@ class HomeActivity : AppCompatActivity() {
         initToolbar()
         initNavView()
         initViewPagerContent()
-        BookFragment.setContentList(books)
-        MagazineFragment.setContentList(books)
+        //BookFragment.setContentList(books)
+        //MagazineFragment.setContentList(books)
         initTabCategoryLayout()
-        /**
-         *  測試讀取 & 寫入 firebase，先暫時留在這，等之後要讀寫 data 時再搬去合宜的區塊
-        //val firestore = FirebaseFirestore.getInstance()
-        //val book = Book("First","vincent","non",R.drawable.apple)
-        //firestore.collection("Books").document("First").set(book)
-        //    .addOnSuccessListener { Log.d("TAG", "DocumentSnapshot successfully written!") }
-        //    .addOnFailureListener { e -> Log.w("TAG", "Error writing document", e) }
-        firestore.collection("Books").document("First").get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    Log.d("TAG", "DocumentSnapshot data: ${document.data}")
-                } else {
-                    Log.d("TAG", "No such document")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.d("TAG", "get failed with ", exception)
-            }
-        */
     }
 
 

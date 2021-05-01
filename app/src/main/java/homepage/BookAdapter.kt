@@ -32,7 +32,7 @@ class BookAdapter (val context : Context, val bookList : List<Book>) : RecyclerV
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val book = bookList[position]
-        Glide.with(context).load(book.bookImageId).into(holder.bookImage)
+        //Glide.with(context).load(book.bookImageId).into(holder.bookImage)
         holder.bookName.text = book.name
     }
 }
