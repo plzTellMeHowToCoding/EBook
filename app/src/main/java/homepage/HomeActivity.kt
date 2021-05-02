@@ -16,7 +16,6 @@ import com.google.android.material.tabs.TabLayout
 import com.vincent.ebook.R
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.home_nav_header.*
-import utils.Book
 
 /**
  *  顯示主頁
@@ -27,11 +26,6 @@ class HomeActivity : AppCompatActivity() {
 
     private val tabTitles = arrayOf("圖書","雜誌")
     private var tabDetails = arrayOf("新到圖書","全部","目前可借","D","E","F","G","H","I","J","K","L","M","N")
-    /*val books = mutableListOf(
-        Book("A","A","A",R.drawable.apple), Book("B","B","B",R.drawable.banana),
-        Book("C","C","C",R.drawable.cherry), Book("D","D","D",R.drawable.grape),
-        Book("E","E","E",R.drawable.mango)
-    )*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +72,7 @@ class HomeActivity : AppCompatActivity() {
         })
     }
 
-    // 監聽 tab 的點擊事件
+    // 監聽 tab 分類的點擊事件
     private fun initTabCategoryLayout(){
         home_tab_category.setSelectedTabIndicator(0)
         initTabCategoryContent(tabDetails)
@@ -92,8 +86,8 @@ class HomeActivity : AppCompatActivity() {
                     tab?.let {
                         Log.d("TAG", "Clicked ${tab?.position}")
                     }
+                    getBookInfo()
                 }
-
             }
         )
     }
