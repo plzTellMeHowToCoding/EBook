@@ -1,5 +1,7 @@
 package utils
 
+import Homepage.BookFragment
+import Homepage.MagazineFragment
 import android.net.Uri
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
@@ -10,7 +12,6 @@ import com.google.firebase.storage.FirebaseStorage
  */
 
 class FireBaseUtils {
-    private val a = "c"
     companion object{
         private val collectionRef = FirebaseFirestore.getInstance().collection("BooksCollection")
         private val firestorageRef = FirebaseStorage.getInstance().reference
@@ -61,18 +62,34 @@ class FireBaseUtils {
         fun getUploadProgress(progress : Int) = progress
 
         /**
-         *  TODO : collectionRef 回傳的是 Map 資料結構，需再將其資料從中取出轉為 Book 物件後寫入 List 中
-         *
+         *  FireStore 若有成功撈到資料的話會在 addOnSuccessListener 中執行
+         *  這邊將設定頁面的 content 擺在 addOnSuccessListener 中
+         *  避免可能因等待時間過長導致回傳資料太久，導致傳入長度為 0 的 List 給 Adapter
+         *  =======================================================================
+         *  collectionRef 回傳的是 Map 資料結構，需再將其資料轉為 Book 物件再寫入 List 中
          */
-        fun getBookInfo():List<Book>{
+        fun setBookInfo(){
             collectionRef.get().addOnSuccessListener {
                 for(book in it){
-                    Log.d(TAG, "@@@@ ${book.data}")
+                    val bookMap = book.data
+                    Log.d(TAG, "@@@@ book data = ${book.data}")
+                    bookList.add(Book(
+                        bookMap["name"].toString(),
+                        bookMap["author"].toString(),
+                        bookMap["version"].toString().toInt(),
+                        bookMap["publishDate"].toString().toInt(),
+                        bookMap["publisher"].toString(),
+                        bookMap["size"].toString(),
+                        bookMap["isbn"].toString(),
+                        bookMap["translator"].toString(),
+                        bookMap["relatedLink"].toString(),
+                        bookMap["uri"].toString()))
                 }
+                BookFragment.setContentList(bookList)
+                MagazineFragment.setContentList(bookList)
             }.addOnFailureListener {
                 Log.d(TAG, "@@@@ get data failure")
             }
-            return bookList
         }
     }
 }

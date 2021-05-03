@@ -33,8 +33,6 @@ class HomeActivity : AppCompatActivity() {
         initToolbar()
         initNavView()
         initViewPagerContent()
-        //BookFragment.setContentList(books)
-        //MagazineFragment.setContentList(books)
         initTabCategoryLayout()
     }
 
@@ -86,7 +84,6 @@ class HomeActivity : AppCompatActivity() {
                     tab?.let {
                         Log.d("TAG", "Clicked ${tab?.position}")
                     }
-                    getBookInfo()
                 }
             }
         )
