@@ -62,10 +62,7 @@ class ManagerActivity : AppCompatActivity() {
             }
         }
         manager_button_cancel.setOnClickListener {
-            for(book in FireBaseUtils.getBookInfo()){
-                Log.d("TAG", "@@@@ retrieved ${book.name} \n ${book.author} \n ${book.version} \n ${book.publishDate} \n ${book.publisher}\n" +
-                        "${book.size} \n ${book.isbn} \n ${book.translator} \n ${book.relatedLink} \n ${book.uri} \n @@@@")
-            }
+
         }
     }
 
