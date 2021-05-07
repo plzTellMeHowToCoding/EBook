@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     tools:context="Homepage.HomeActivity">
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/home_cor"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <com.google.android.material.appbar.AppBarLayout
@@ -17,34 +18,49 @@
                 android:id="@+id/home_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/design_default_color_secondary"
+                android:background="@color/theme_color"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_scrollFlags="scroll|enterAlways|snap"/>
-            <com.google.android.material.tabs.TabLayout
+            <!--<com.google.android.material.tabs.TabLayout
                 android:id="@+id/home_tab"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/design_default_color_secondary"
                 app:tabSelectedTextColor="@color/white"
                 app:tabGravity="center"
-                app:layout_scrollFlags="scroll|enterAlways|snap"/>
+                app:layout_scrollFlags="scroll|enterAlways|snap"/>-->
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/home_tab_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/design_default_color_secondary"
+                android:background="@color/tab_color"
                 app:tabSelectedTextColor="@color/white"
                 app:tabGravity="fill"
                 app:tabMaxWidth="0dp"
                 app:layout_scrollFlags="scroll|enterAlways|snap"
                 app:tabMode="scrollable"/>
         </com.google.android.material.appbar.AppBarLayout>
-        <androidx.viewpager.widget.ViewPager
+        <FrameLayout
+            android:id="@+id/home_content_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/view_pager_content_color"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        <!--<androidx.viewpager.widget.ViewPager
             android:id="@+id/home_view_pager_content_area"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            android:background="@color/view_pager_content_color"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>-->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/home_floating_button_go_to_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="20dp"
+            android:src="@drawable/home_floating_button_to_top_arrow"
+            app:layout_behavior="utils.FabButtonScrollBehavior"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView

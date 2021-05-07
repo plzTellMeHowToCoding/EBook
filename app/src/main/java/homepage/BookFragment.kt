@@ -46,6 +46,13 @@ class BookFragment : Fragment() {
         }
     }
 
+    /**
+     *  TODO 根據使用者點選不同分類的 tab 來過濾出顯示的內容
+     */
+    fun setFilterCodition(){
+
+    }
+    
     // 初始化分類的 tab
     /**private fun initTabCategory(){
         for(i in tabDetails.indices){
@@ -57,9 +64,6 @@ class BookFragment : Fragment() {
     companion object {
         private var tabDetails = mutableListOf<String>()
         private var bookList = mutableListOf<Book>()
-        fun setCategoryList(categoryList: Array<String>) {
-            tabDetails = categoryList.toMutableList()
-        }
         fun setContentList(books : List<Book>){
             bookList.addAll(books)
         }
