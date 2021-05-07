@@ -32,7 +32,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         initToolbar()
         initNavView()
-        initViewPagerContent()
+        initHomeTabLayout()
         initHomeContent()
         initFloatingBtn()
     }
@@ -44,31 +44,31 @@ class HomeActivity : AppCompatActivity() {
     }
 
     // 初始化要顯示在 viewPager 裡的內容
-    private fun initViewPagerContent(){
-        //home_view_pager_content_area.adapter = bookContentAdapter
-        //home_tab_category.setupWithViewPager(home_view_pager_content_area)
-        for(i in tabCategory.indices){
+    private fun initHomeTabLayout() {
+        for (i in tabCategory.indices) {
             //val tab = home_tab_category.getTabAt(i)
             val tab = home_tab_category.newTab()
-            val view = LayoutInflater.from(this).inflate(R.layout.home_tab_category,null)
+            val view = LayoutInflater.from(this).inflate(R.layout.home_tab_category, null)
             view.findViewById<TextView>(R.id.home_tab_category_tv).text = tabCategory[i]
             tab?.customView = view
             home_tab_category.addTab(tab)
         }
-        home_tab_category.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+        home_tab_category.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
-                Toast.makeText(this@HomeActivity,"click",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@HomeActivity, "click", Toast.LENGTH_SHORT).show()
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
-                Toast.makeText(this@HomeActivity,"click",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@HomeActivity, "click", Toast.LENGTH_SHORT).show()
             }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                Toast.makeText(this@HomeActivity,"click",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@HomeActivity, "click", Toast.LENGTH_SHORT).show()
             }
 
         })
+        //home_view_pager_content_area.adapter = bookContentAdapter
+        //home_tab_category.setupWithViewPager(home_view_pager_content_area)
         // 隱藏選中的 tablayout 的底線
         //home_tab_category.setSelectedTabIndicator(0)
 
@@ -85,11 +85,8 @@ class HomeActivity : AppCompatActivity() {
             ) {
                 Log.d("TAG", "@@@@ onPageScrolled: ")
             }
-
-            *//**
-             *  每當 viewpager 觸發換頁動作（ex. 圖書 -> 雜誌），會呼叫 onPageSelected 方法
-             *  故在這方法中去重新設置 home_tab_category 分類
-             *//*
+             每當 viewpager 觸發換頁動作（ex. 圖書 -> 雜誌），會呼叫 onPageSelected 方法
+             故在這方法中去重新設置 home_tab_category 分類
             override fun onPageSelected(position: Int) {
 
             }
