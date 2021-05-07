@@ -32,7 +32,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         initToolbar()
         initNavView()
-        initViewPagerContent()
+        initHomeTabLayout()
         initHomeContent()
         initFloatingBtn()
     }
@@ -44,9 +44,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     // 初始化要顯示在 viewPager 裡的內容
-    private fun initViewPagerContent(){
-        //home_view_pager_content_area.adapter = bookContentAdapter
-        //home_tab_category.setupWithViewPager(home_view_pager_content_area)
+    private fun initHomeTabLayout(){
         for(i in tabCategory.indices){
             //val tab = home_tab_category.getTabAt(i)
             val tab = home_tab_category.newTab()
@@ -69,6 +67,8 @@ class HomeActivity : AppCompatActivity() {
             }
 
         })
+        //home_view_pager_content_area.adapter = bookContentAdapter
+        //home_tab_category.setupWithViewPager(home_view_pager_content_area)
         // 隱藏選中的 tablayout 的底線
         //home_tab_category.setSelectedTabIndicator(0)
 
@@ -86,10 +86,10 @@ class HomeActivity : AppCompatActivity() {
                 Log.d("TAG", "@@@@ onPageScrolled: ")
             }
 
-            *//**
+           /**
              *  每當 viewpager 觸發換頁動作（ex. 圖書 -> 雜誌），會呼叫 onPageSelected 方法
              *  故在這方法中去重新設置 home_tab_category 分類
-             *//*
+             */
             override fun onPageSelected(position: Int) {
 
             }
