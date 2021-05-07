@@ -88,6 +88,7 @@ class FireBaseUtils {
                 BookFragment.setContentList(bookList)
                 MagazineFragment.setContentList(bookList)
             }.addOnFailureListener {
+                // TODO 若 firebase 回傳失敗，可考慮直接通知 UI 顯示錯誤畫面
                 Log.d(TAG, "@@@@ get data failure")
             }
         }
