@@ -1,6 +1,7 @@
 package Homepage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +18,13 @@ import utils.Book
 
 class BookFragment : Fragment() {
 
-    private val contentList = arrayListOf<Book>()
-
+    private val filterContentList = arrayListOf<Book>()
+    private val homeActivity by lazy{
+        activity as HomeActivity
+    }
+    private val adapter by lazy{
+        BookAdapter(homeActivity,filterContentList)
+    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.frag_book,container,false)
     }
@@ -28,41 +34,33 @@ class BookFragment : Fragment() {
         initRecyclerView()
     }
     private fun initBookList(){
-        repeat(50){
+        /*repeat(50){
             val index = (0 until bookList.size).random()
             contentList.add(bookList[index])
-        }
+        }*/
+        filterContentList.addAll(bookList)
     }
 
     private fun initRecyclerView(){
         initBookList()
         if(activity != null) {
-            val homeActivity = activity as HomeActivity
             val layoutManager = GridLayoutManager(homeActivity,3)
-            val adapter = BookAdapter(homeActivity, contentList)
-            //val adapter = BookAdapter(homeActivity, bookList)
             home_frag_book_list.layoutManager = layoutManager
             home_frag_book_list.adapter = adapter
         }
     }
 
     /**
-     *  TODO 根據使用者點選不同分類的 tab 來過濾出顯示的內容
+     *  接收經過篩選後的資料，並通知 recycler view 進行畫面更新
      */
-    fun setFilterCodition(){
-
+    fun setFilterResult(filterResultList : List<Book>){
+        Log.d("TAG", "@@@@ FilterCondition")
+        filterContentList.clear()
+        filterContentList.addAll(filterResultList)
+        adapter.notifyDataSetChanged()
     }
-    
-    // 初始化分類的 tab
-    /**private fun initTabCategory(){
-        for(i in tabDetails.indices){
-            frag_book_tab_category.addTab(frag_book_tab_category.newTab())
-            frag_book_tab_category.getTabAt(i)?.text = tabDetails[i]
-        }
-    }*/
 
     companion object {
-        private var tabDetails = mutableListOf<String>()
         private var bookList = mutableListOf<Book>()
         fun setContentList(books : List<Book>){
             bookList.addAll(books)

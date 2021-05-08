@@ -3,6 +3,7 @@ package utils
 import Homepage.BookFragment
 import android.net.Uri
 import android.util.Log
+import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
@@ -16,6 +17,12 @@ class FireBaseUtils {
         private val firestorageRef = FirebaseStorage.getInstance().reference
         private val TAG = "FirebaseUtils"
         private val bookList = mutableListOf<Book>()
+        /**
+         * 為了能夠在從 Firebase 得出經過篩選後的資料時，通知 BookFragment 中的 Recycler 刷新畫面
+         * 故在 HomeActivity 執行完 onCreate 後
+         * 將 BookFragment 物件傳入，讓 FireBaseUtils 可直接呼叫 BookFragment 中的 function
+         */
+        private var frag : BookFragment? = null
 
         private fun executeUpload(bookInfo : Book){
             collectionRef.document().set(bookInfo)
@@ -41,12 +48,12 @@ class FireBaseUtils {
         fun setUploadInfoAndUpload(filePath : String, imageUri : Uri, name : String,
                       author : String, version : String, publishDate : String,
                       publisher: String, size : String, isbn : String,
-                      translator : String, relatedLink : String){
+                      translator : String, relatedLink : String, uploadTime : Long){
             firestorageRef.child(filePath).putFile(imageUri)
                 .addOnSuccessListener {
                     // 這邊 return 的 URI 可能因為時間過長，導致外部在存取的時候仍為 null
                     it.storage.downloadUrl.addOnSuccessListener { result ->
-                        val book = Book(name,author,version.toInt(),publishDate.toInt(),publisher,size,isbn,translator,relatedLink,result.toString())
+                        val book = Book(name,author,version.toInt(),publishDate.toInt(),publisher,size,isbn,translator,relatedLink,result.toString(),uploadTime)
                         executeUpload(book)
                     }
                     Log.d(TAG, "@@@@ upload image success")
@@ -69,6 +76,7 @@ class FireBaseUtils {
          */
         fun setBookInfo(){
             collectionRef.get().addOnSuccessListener {
+                bookList.clear()
                 for(book in it){
                     val bookMap = book.data
                     Log.d(TAG, "@@@@ book data = ${book.data}")
@@ -82,13 +90,66 @@ class FireBaseUtils {
                         bookMap["isbn"].toString(),
                         bookMap["translator"].toString(),
                         bookMap["relatedLink"].toString(),
-                        bookMap["uri"].toString()))
+                        bookMap["uri"].toString(),
+                        if(bookMap["uploadTime"] == null) 0L  else bookMap["uploadTime"].toString().toLong()))
                 }
                 BookFragment.setContentList(bookList)
             }.addOnFailureListener {
                 // TODO 若 firebase 回傳失敗，可考慮直接通知 UI 顯示錯誤畫面
                 Log.d(TAG, "@@@@ get data failure")
             }
+        }
+
+        fun getFilterBook(field : String, condition : String){
+            collectionRef.whereEqualTo(field,condition).get().addOnSuccessListener {
+                bookList.clear()
+                for(book in it){
+                    val bookMap = book.data
+                    bookList.add(Book(
+                        bookMap["name"].toString(),
+                        bookMap["author"].toString(),
+                        bookMap["version"].toString().toInt(),
+                        bookMap["publishDate"].toString().toInt(),
+                        bookMap["publisher"].toString(),
+                        bookMap["size"].toString(),
+                        bookMap["isbn"].toString(),
+                        bookMap["translator"].toString(),
+                        bookMap["relatedLink"].toString(),
+                        bookMap["uri"].toString(),
+                        if(bookMap["uploadTime"] == null) 0L  else bookMap["uploadTime"].toString().toLong()))
+                }
+                frag?.setFilterResult(bookList)
+            }
+        }
+
+        fun getAllBook(){
+            collectionRef.get().addOnSuccessListener {
+                bookList.clear()
+                for(book in it){
+                    val bookMap = book.data
+                    Log.d(TAG, "@@@@ book data = ${book.data}")
+                    bookList.add(Book(
+                        bookMap["name"].toString(),
+                        bookMap["author"].toString(),
+                        bookMap["version"].toString().toInt(),
+                        bookMap["publishDate"].toString().toInt(),
+                        bookMap["publisher"].toString(),
+                        bookMap["size"].toString(),
+                        bookMap["isbn"].toString(),
+                        bookMap["translator"].toString(),
+                        bookMap["relatedLink"].toString(),
+                        bookMap["uri"].toString(),
+                        if(bookMap["uploadTime"] == null) 0L  else bookMap["uploadTime"].toString().toLong()))
+                }
+                frag?.setFilterResult(bookList)
+            }.addOnFailureListener {
+                // TODO 若 firebase 回傳失敗，可考慮直接通知 UI 顯示錯誤畫面
+                Log.d(TAG, "@@@@ get data failure")
+            }
+        }
+        // 讓 HomeActivity 可將 BookFragment 物件傳入而做的 function
+        fun setFrag(passFrag : Fragment){
+            frag = passFrag as BookFragment
         }
     }
 }

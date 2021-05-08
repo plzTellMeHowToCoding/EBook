@@ -15,6 +15,7 @@ import com.google.android.material.tabs.TabLayout
 import com.vincent.ebook.R
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.home_nav_header.*
+import utils.FireBaseUtils
 
 /**
  *  顯示主頁
@@ -23,7 +24,7 @@ import kotlinx.android.synthetic.main.home_nav_header.*
 
 class HomeActivity : AppCompatActivity() {
 
-    private var tabCategory = arrayOf("全部","新到圖書","目前可借","D","E","F","G","H","I","J","K","L","M","N")
+    private var tabCategory = arrayOf("全部","新到圖書","目前可借","作者","出版年","F","G","H","I","J","K","L","M","N")
     private val bookFrag by lazy {
         BookFragment()
     }
@@ -35,6 +36,8 @@ class HomeActivity : AppCompatActivity() {
         initHomeTabLayout()
         initHomeContent()
         initFloatingBtn()
+        // 這邊將 bookFrag 物件傳入，讓 FireBase 在更新完一些資料後能調用 bookFrag 的 function
+        FireBaseUtils.setFrag(bookFrag)
     }
 
     private fun initHomeContent(){
@@ -55,15 +58,31 @@ class HomeActivity : AppCompatActivity() {
         }
         home_tab_category.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
-                Toast.makeText(this@HomeActivity, "click", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@HomeActivity, "click", Toast.LENGTH_SHORT).show()
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
-                Toast.makeText(this@HomeActivity, "click", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@HomeActivity, "click", Toast.LENGTH_SHORT).show()
             }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                Toast.makeText(this@HomeActivity, "click", Toast.LENGTH_SHORT).show()
+                when(tab?.position){
+                    0 -> {
+                        FireBaseUtils.getAllBook()
+                    }
+                    1 -> {
+                        Toast.makeText(this@HomeActivity, "click 1", Toast.LENGTH_SHORT).show()
+                    }
+                    2 -> {
+
+                    }
+                    3 -> {
+                        FireBaseUtils.getFilterBook("author","vincent")
+                    }
+                    4 -> {
+
+                    }
+                }
             }
 
         })

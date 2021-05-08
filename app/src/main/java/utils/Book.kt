@@ -14,7 +14,7 @@ import android.net.Uri
  *  @param translator 譯者
  *  @param relatedLink 書本的相關連結（未來可放導向至其他網頁的連結，如：博客來、金石堂等）
  *  @param uri 圖片上傳至雲端的連結
- *
+ *  @param uploadTime 資料寫入 Firebase 的時間
  *  ============== 日後可多增加以下欄位 ==============
  *  4. 是否可外借
  *  5. 分類
@@ -31,5 +31,6 @@ class Book(val name : String,
            val isbn : String,
            val translator : String,
            val relatedLink : String,
-           val uri : String) {
+           val uri : String,
+           val uploadTime : Long) {
 }

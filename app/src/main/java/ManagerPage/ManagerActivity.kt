@@ -57,7 +57,7 @@ class ManagerActivity : AppCompatActivity() {
                         || relatedLink.isNullOrBlank())
             ) {
                 FireBaseUtils.setUploadInfoAndUpload(uploadBookImageUri.lastPathSegment ?: "",uploadBookImageUri, name, author,
-                version,publishData,publisher,size,isbn,translator,relatedLink)
+                version,publishData,publisher,size,isbn,translator,relatedLink,System.currentTimeMillis())
                 Log.d("TAG", "@@@@ after upload book info ")
             }
         }
