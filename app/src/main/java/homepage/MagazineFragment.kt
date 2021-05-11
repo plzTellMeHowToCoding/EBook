@@ -12,6 +12,7 @@ import utils.Book
 
 /**
  *  日後可考慮抽出 baseFragment 類別，將諸如 setCategoryList , setContentList 方法提出來寫
+ *  not use now
  *  2021.04.23 vincent
  */
 
@@ -39,7 +40,7 @@ class MagazineFragment : Fragment(){
         if(activity != null) {
             val homeActivity = activity as HomeActivity
             val layoutManager = GridLayoutManager(homeActivity,3)
-            val adapter = BookAdapter(homeActivity, contentList)
+            val adapter = BookAdapter(homeActivity,homeActivity, contentList)
             //val adapter = BookAdapter(homeActivity, bookList)
             home_frag_magazine_list.layoutManager = layoutManager
             home_frag_magazine_list.adapter = adapter
