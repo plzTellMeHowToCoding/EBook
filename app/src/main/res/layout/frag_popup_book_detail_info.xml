@@ -15,7 +15,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="書名："
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textColor="@color/black"
             android:layout_weight="2"
             android:gravity="center"
@@ -25,7 +25,7 @@
             android:layout_width="0dp"
             android:layout_weight="8"
             android:layout_height="wrap_content"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -38,7 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="作者："
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textColor="@color/black"
             android:layout_weight="2"
             android:gravity="center"
@@ -48,7 +48,7 @@
             android:layout_width="0dp"
             android:layout_weight="8"
             android:layout_height="wrap_content"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -61,7 +61,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="版本："
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textColor="@color/black"
             android:layout_weight="2"
             android:gravity="center"
@@ -71,7 +71,7 @@
             android:layout_width="0dp"
             android:layout_weight="8"
             android:layout_height="wrap_content"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -84,17 +84,17 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="出版年："
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textColor="@color/black"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:gravity="center"
             />
         <TextView
             android:id="@+id/popup_book_detail_info_content_publish_year"
             android:layout_width="0dp"
-            android:layout_weight="7"
+            android:layout_weight="8"
             android:layout_height="wrap_content"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -107,17 +107,17 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="出版商："
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textColor="@color/black"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:gravity="center"
             />
         <TextView
             android:id="@+id/popup_book_detail_info_content_publisher"
             android:layout_width="0dp"
-            android:layout_weight="7"
+            android:layout_weight="8"
             android:layout_height="wrap_content"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -130,7 +130,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="大綱："
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textColor="@color/black"
             android:layout_weight="2"
             android:gravity="center"
@@ -140,6 +140,6 @@
             android:layout_width="0dp"
             android:layout_weight="8"
             android:layout_height="wrap_content"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
     </LinearLayout>
 </LinearLayout>
