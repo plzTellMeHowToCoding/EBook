@@ -3,6 +3,7 @@ package Homepage
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,9 +19,6 @@ class BookAdapter (val context : Context, val bookList : List<Book>) : RecyclerV
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_book,parent,false)
-        /*view.setOnClickListener {
-            Toast.makeText(parent.context,"clicked",Toast.LENGTH_SHORT).show()
-        }*/
         return ViewHolder(view)
     }
 
@@ -48,8 +46,14 @@ class BookAdapter (val context : Context, val bookList : List<Book>) : RecyclerV
                 val intent = Intent(context,
                     PopupBookDetailInfoActivity::class.java)
                 context.startActivity(intent)
-                PopupBookDetailInfoActivity.setBookPicUri(Uri.parse(bookList[adapterPosition].uri))
+                setPopupActivityBookPicUriAndInfoDesc()
             }
+        }
+        //將書目的圖片 Uri 和書目資訊傳給 Popup activity
+        private fun setPopupActivityBookPicUriAndInfoDesc(){
+            val book = bookList[adapterPosition]
+            PopupBookDetailInfoActivity.setBookPicUri(Uri.parse(book.uri))
+            PopupBookDetailInfoActivity.setBookInfo(book.name,book.author,book.version,book.publishDate,book.publisher,"this is outline")
         }
     }
 }

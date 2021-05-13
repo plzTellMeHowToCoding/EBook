@@ -14,6 +14,9 @@ import kotlinx.android.synthetic.main.activity_popup_book_detail_info.*
  *  點選主頁中的書本項目後，彈出點擊的書本詳細資訊頁面
  */
 class PopupBookDetailInfoActivity : AppCompatActivity() {
+    private val popupBookDetailInfoFrag by lazy{
+        PopupBookDetailInfoFragment()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_popup_book_detail_info)
@@ -40,7 +43,15 @@ class PopupBookDetailInfoActivity : AppCompatActivity() {
     // 設定顯示書本詳細資訊的 fragment
     private fun setupBookDetailInfoFragment(){
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.popup_book_detail_info_container,PopupBookDetailInfoFragment())
+        transaction.replace(R.id.popup_book_detail_info_container,popupBookDetailInfoFrag)
+        popupBookDetailInfoFrag.arguments = Bundle().also {
+            it.putString("name", bookName)
+            it.putString("author", bookAuthor)
+            it.putInt("version", bookVersion)
+            it.putInt("publishYear", bookPublishYear)
+            it.putString("publisher", bookPublisher)
+            it.putString("outline", bookOutline)
+        }
         transaction.commit()
     }
 
@@ -57,6 +68,21 @@ class PopupBookDetailInfoActivity : AppCompatActivity() {
         fun setBookPicUri(picUri : Uri){
             bookPicUri = picUri
             Log.d("TAG", "@@@@ picUri = $bookPicUri")
+        }
+        private var bookName : String = ""
+        private var bookAuthor : String = ""
+        private var bookVersion : Int = 0
+        private var bookPublishYear : Int = 0
+        private var bookPublisher : String = ""
+        private var bookOutline : String = ""
+
+        fun setBookInfo(name : String, author : String, version : Int, publishYear : Int, publisher : String, outline : String){
+            bookName = name
+            bookAuthor = author
+            bookVersion = version
+            bookPublishYear = publishYear
+            bookPublisher = publisher
+            bookOutline = outline
         }
     }
 }
