@@ -7,7 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import Homepage.HomeActivity
-import utils.FireBaseUtils
+import Utils.FireBaseUtils
 
 class MainActivity : AppCompatActivity() {
 

@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide
 import com.vincent.ebook.R
 import kotlinx.android.synthetic.main.activity_manager.*
 import kotlinx.android.synthetic.main.view_upload_book.*
-import utils.FireBaseUtils
+import Utils.FireBaseUtils
 import java.io.File
 
 class ManagerActivity : AppCompatActivity() {

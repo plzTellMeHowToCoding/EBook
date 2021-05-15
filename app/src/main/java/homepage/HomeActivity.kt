@@ -15,7 +15,7 @@ import com.google.android.material.tabs.TabLayout
 import com.vincent.ebook.R
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.home_nav_header.*
-import utils.FireBaseUtils
+import Utils.FireBaseUtils
 
 /**
  *  顯示主頁

@@ -60,7 +60,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="20dp"
             android:src="@drawable/home_floating_button_to_top_arrow"
-            app:layout_behavior="utils.FabButtonScrollBehavior"/>
+            app:layout_behavior="Utils.FabButtonScrollBehavior"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView

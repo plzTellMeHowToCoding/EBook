@@ -1,6 +1,4 @@
-package utils
-
-import android.net.Uri
+package Utils
 
 /**
  *  存放電子書相關資料：

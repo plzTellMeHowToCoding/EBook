@@ -3,7 +3,6 @@ package Homepage
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vincent.ebook.R
-import utils.Book
+import Utils.Book
 
 class BookAdapter (val context : Context, val bookList : List<Book>) : RecyclerView.Adapter<BookAdapter.ViewHolder>() {
 

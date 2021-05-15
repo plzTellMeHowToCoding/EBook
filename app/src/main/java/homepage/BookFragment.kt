@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.vincent.ebook.R
 import kotlinx.android.synthetic.main.frag_book.*
-import utils.Book
+import Utils.Book
 
 /**
  *  日後可考慮抽出 baseFragment 類別，將諸如 setCategoryList , setContentList 方法提出來寫

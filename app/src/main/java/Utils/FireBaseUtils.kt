@@ -1,4 +1,4 @@
-package utils
+package Utils
 
 import Homepage.BookFragment
 import android.net.Uri
