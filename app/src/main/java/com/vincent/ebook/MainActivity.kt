@@ -8,6 +8,7 @@ import android.os.Looper
 import android.os.Message
 import Homepage.HomeActivity
 import Utils.FireBaseUtils
+import android.content.Context
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,5 +26,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         FireBaseUtils.setBookInfo()
         handler.sendEmptyMessageDelayed(0,4000)
+    }
+
+    companion object{
+        fun startMainActivity(context : Context){
+            val intent = Intent(context,MainActivity::class.java)
+            context.startActivity(intent)
+        }
     }
 }

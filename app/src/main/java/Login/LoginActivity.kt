@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.vincent.ebook.MainActivity
 import com.vincent.ebook.R
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -52,12 +53,10 @@ class LoginActivity : AppCompatActivity() {
                     firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                         if(firebaseAuth.currentUser.isEmailVerified){
                             if(it.isSuccessful) {
-                                Toast.makeText(this, "success", Toast.LENGTH_SHORT).show()
-                            }else{
-                                Log.d("TAG", "@@@@ fail ")
+                                MainActivity.startMainActivity(this)
                             }
                         } else {
-                            Toast.makeText(this, "fail ${it.exception}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "信箱尚未驗證，請至註冊信箱點選驗證信件", Toast.LENGTH_SHORT).show()
                         }
                     }.addOnFailureListener {
                         Toast.makeText(this, "帳號或密碼錯誤，請重新輸入", Toast.LENGTH_SHORT).show()
