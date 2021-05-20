@@ -30,41 +30,57 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_margin="10dp"/>
 
-    <EditText
-        android:id="@+id/login_edit_email"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/login_edit_layout_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/login_img_icon"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         app:layout_constraintWidth_percent=".8"
         app:layout_constraintVertical_bias=".3"
         app:layout_constraintHorizontal_bias=".5"
-        android:hint="Email" />
+        android:layout_marginTop="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <EditText
+            android:id="@+id/login_edit_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:hint="Email" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/login_edit_password"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/login_edit_layout_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/login_edit_email"
+        app:layout_constraintTop_toBottomOf="@id/login_edit_layout_email"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         app:layout_constraintWidth_percent=".8"
         app:layout_constraintVertical_bias=".3"
         app:layout_constraintHorizontal_bias=".5"
-        android:hint="Password" />
+        app:passwordToggleEnabled="true"
+        android:layout_marginTop="20dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <EditText
+            android:id="@+id/login_edit_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:hint="Password"
+            android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/login_btn_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/login_edit_password"
+        app:layout_constraintTop_toBottomOf="@id/login_edit_layout_password"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -82,7 +98,7 @@
         android:textSize="15sp"
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/login_btn_login"
-        app:layout_constraintRight_toRightOf="@id/login_edit_password"
+        app:layout_constraintRight_toRightOf="@id/login_edit_layout_password"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp" />
 
