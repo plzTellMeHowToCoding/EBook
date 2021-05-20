@@ -37,6 +37,7 @@ class PopupBookDetailInfoActivity : AppCompatActivity() {
         windowManager.defaultDisplay.getMetrics(dm)
         val height = dm.heightPixels
         val width = dm.widthPixels
+        window.setBackgroundDrawableResource(R.drawable.round_corner)
         window.setLayout((width * .8).toInt(),(height * .8).toInt())
     }
 

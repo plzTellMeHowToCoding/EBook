@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--Stroke settings-->
+    <stroke android:color="@android:color/black"
+        android:width="1px"
+        />
+
+    <!--Fill settings-->
+    <solid android:color="@android:color/white"/>
+
+    <!--Fillet settings-->
+    <corners android:radius="30dp"/>
+
+</shape>

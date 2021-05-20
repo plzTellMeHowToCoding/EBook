@@ -60,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
                             Toast.makeText(this, "fail ${it.exception}", Toast.LENGTH_SHORT).show()
                         }
                     }.addOnFailureListener {
-                        Log.d("TAG", "@@@@ fail ")
+                        Toast.makeText(this, "帳號或密碼錯誤，請重新輸入", Toast.LENGTH_SHORT).show()
                     }
                 }
         }
