@@ -1,5 +1,6 @@
 package Login
 
+import ForgotPassword.ForgotPasswordActivity
 import Register.RegisterActivity
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,7 @@ class LoginActivity : AppCompatActivity() {
         setLoginIcon()
         processGoToRegisterPage()
         processLogin()
+        processForgotPassword()
     }
 
     private fun setFontType(){
@@ -35,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
     // 處理忘記密碼邏輯
     private fun processForgotPassword(){
         login_txv_forgot_password.setOnClickListener {
-
+            ForgotPasswordActivity.startForgotPasswordActivity(this)
         }
     }
 
@@ -52,6 +54,7 @@ class LoginActivity : AppCompatActivity() {
                         if(firebaseAuth.currentUser.isEmailVerified){
                             if(it.isSuccessful) {
                                 MainActivity.startMainActivity(this)
+                                finish()
                             }
                         } else {
                             Toast.makeText(this, "信箱尚未驗證，請至註冊信箱點選驗證信件", Toast.LENGTH_SHORT).show()

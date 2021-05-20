@@ -11,4 +11,5 @@
     <color name="theme_color">#978163</color>
     <color name="tab_color">#daaf78</color>
     <color name="view_pager_content_color">#eae1b8</color>
+    <color name="error_message_color">#FF0000</color>
 </resources>
