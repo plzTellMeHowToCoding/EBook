@@ -16,6 +16,9 @@ import com.vincent.ebook.R
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.home_nav_header.*
 import Utils.FireBaseUtils
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 /**
  *  顯示主頁
@@ -147,7 +150,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun initNavView(){
-        processNavHeader()
+        setNavHeaderUserName()
         processNavMenu()
         processNavBottom()
     }
@@ -161,24 +164,6 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * 處理 navigation view 最上方 edit, remove 邏輯
-     *
-     * 由於 header view 中的 component 不能直接呼叫 setOnClickListener，故要先找到 headerView Object 後
-     * 再利用 headerView object 呼叫 findViewById()，得到 headerView 中的其他 component
-     */
-    private fun processNavHeader(){
-        val headerView = home_toolbar_nav_view.getHeaderView(0)
-        val headerEdit = headerView.findViewById<TextView>(R.id.home_nav_header_edit)
-        headerEdit.setOnClickListener {
-            if(home_nav_header_remove.visibility == View.INVISIBLE){
-                setNavHeaderItemTextAndVisible("Cancel",View.VISIBLE)
-            }else{
-                setNavHeaderItemTextAndVisible("Edit",View.INVISIBLE)
-            }
-        }
-    }
-
     //處理 navigation view 最下方 Add Library 邏輯
     private fun processNavBottom(){
         home_nav_add_library.setOnClickListener{
@@ -186,13 +171,10 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * @param title 設定要顯示的標題
-     * @param showOrNot 設定是否顯示 remove icon
-     * */
-    private fun setNavHeaderItemTextAndVisible(title : String, showOrNot:Int){
-        home_nav_header_edit.text = title
-        home_nav_header_remove.visibility = showOrNot
+    private fun setNavHeaderUserName(){
+        val firebaseAuth = Firebase.auth
+        val headerView = home_toolbar_nav_view.getHeaderView(0)
+        headerView.findViewById<TextView>(R.id.home_nav_header_title_name).text = firebaseAuth.currentUser.email
     }
 
     //將當前顯示的列表移動至最上方

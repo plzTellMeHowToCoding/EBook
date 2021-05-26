@@ -1,38 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:orientation="horizontal"
-    android:background="#FFF"
-    android:elevation="10dp">
+    android:layout_height="120dp"
+    android:background="@color/theme_color"
+    android:elevation="10dp"
+    android:padding="10dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/home_nav_header_profile_image"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/profile_image"
+        android:scaleType="centerCrop"/>
 
     <TextView
-        android:id="@+id/home_nav_header_edit"
-        android:layout_height="match_parent"
-        android:layout_width="0dp"
-        android:layout_weight="2"
-        android:text="Edit"
-        android:textSize="18sp"
-        android:gravity="center_horizontal|center_vertical"
-        android:clickable="true"/>
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="6"
-        android:text="My Libraries"
-        android:gravity="center_horizontal|center_vertical"
-        android:textSize="20sp" />
-
-    <ImageView
-        android:id="@+id/home_nav_header_remove"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:visibility="invisible"
-        android:src="@drawable/nav_home_trash_icon"
-        android:layout_gravity="center_vertical"
-        android:clickable="true"/>
-
-</LinearLayout>
+        android:id="@+id/home_nav_header_title_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_nav_header_profile_image"
+        android:textSize="14sp"
+        android:textColor="#FFFFFF"/>
+</RelativeLayout>
