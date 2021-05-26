@@ -1,5 +1,6 @@
 package Homepage
 
+import ManagerPage.ManagerActivity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -157,9 +158,16 @@ class HomeActivity : AppCompatActivity() {
 
     // 處理 navigation view 中間 menu 邏輯
     private fun processNavMenu(){
-        home_toolbar_nav_view.setCheckedItem(R.id.firstLibrary)
+        home_toolbar_nav_view.setCheckedItem(R.id.go_to_manager_page)
         home_toolbar_nav_view.setNavigationItemSelectedListener {
-            Toast.makeText(this,"clicked first library",Toast.LENGTH_SHORT).show()
+            when(it.itemId){
+                R.id.go_to_manager_page -> {
+                    ManagerActivity.startManagerActivity(this)
+                }
+                R.id.borrow_book -> {
+                    Toast.makeText(this,"clicked borrow book",Toast.LENGTH_SHORT).show()
+                }
+            }
             true
         }
     }

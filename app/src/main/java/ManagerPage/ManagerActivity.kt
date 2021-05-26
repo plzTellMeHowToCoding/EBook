@@ -17,6 +17,7 @@ import com.vincent.ebook.R
 import kotlinx.android.synthetic.main.activity_manager.*
 import kotlinx.android.synthetic.main.view_upload_book.*
 import Utils.FireBaseUtils
+import android.content.Context
 import java.io.File
 
 class ManagerActivity : AppCompatActivity() {
@@ -150,5 +151,10 @@ class ManagerActivity : AppCompatActivity() {
     companion object{
         private const val TAKE_PHOTO = 1
         private const val CHOOSE_PHOTO = 2
+
+        fun startManagerActivity(context: Context){
+            val intent = Intent(context,ManagerActivity::class.java)
+            context.startActivity(intent)
+        }
     }
 }

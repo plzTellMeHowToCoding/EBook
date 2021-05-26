@@ -2,7 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/firstLibrary"
-            android:title="電子書服務平台(國立公共資訊圖書)"/>
+            android:id="@+id/go_to_manager_page"
+            android:title="上傳圖書"/>
+        <item
+            android:id="@+id/borrow_book"
+            android:title="已借圖書"/>
     </group>
 </menu>
