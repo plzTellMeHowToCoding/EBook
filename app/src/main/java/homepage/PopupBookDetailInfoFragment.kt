@@ -18,6 +18,12 @@ class PopupBookDetailInfoFragment : Fragment() {
         return layoutInflater.inflate(R.layout.frag_popup_book_detail_info,null)
     }
 
+    private fun processBorrowBook(){
+        popup_book_detail_info_button_borrow.setOnClickListener {
+            Log.d("TAG", "@@@@ click borrow button")
+        }
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if(arguments != null) {
@@ -30,6 +36,7 @@ class PopupBookDetailInfoFragment : Fragment() {
             val outline = arguments?.getString("outline")
             setupBookInfoDesc(name!!, author!!, version!!, publishYear!!, publisher!!, outline!!)
         }
+        processBorrowBook()
     }
 
     fun setupBookInfoDesc(name : String, author : String, version : Int, publishYear : Int, publisher : String, outline : String) {
