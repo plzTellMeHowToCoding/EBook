@@ -24,6 +24,13 @@ class LoginActivity : AppCompatActivity() {
         processGoToRegisterPage()
         processLogin()
         processForgotPassword()
+        processGuestLogin()
+    }
+
+    private fun processGuestLogin(){
+        login_txv_guest_login.setOnClickListener {
+            MainActivity.startMainActivity(this,false)
+        }
     }
 
     private fun setFontType(){
@@ -53,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
                     firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                         if(firebaseAuth.currentUser.isEmailVerified){
                             if(it.isSuccessful) {
-                                MainActivity.startMainActivity(this)
+                                MainActivity.startMainActivity(this,true)
                                 finish()
                             }
                         } else {

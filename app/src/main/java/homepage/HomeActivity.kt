@@ -17,6 +17,9 @@ import com.vincent.ebook.R
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.home_nav_header.*
 import Utils.FireBaseUtils
+import android.content.Context
+import android.content.Intent
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -32,9 +35,12 @@ class HomeActivity : AppCompatActivity() {
     private val bookFrag by lazy {
         BookFragment()
     }
+    private var isLogin = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        //Log.d("TAG", "@@@ isLogin = ${intent.getBooleanExtra("isLogin",false)} ")
+        isLogin = intent.getBooleanExtra("isLogin",false)
         initToolbar()
         initNavView()
         initHomeTabLayout()
@@ -152,23 +158,26 @@ class HomeActivity : AppCompatActivity() {
 
     private fun initNavView(){
         setNavHeaderUserName()
+        setNavMenu()
         processNavMenu()
         processNavBottom()
     }
 
     // 處理 navigation view 中間 menu 邏輯
     private fun processNavMenu(){
-        home_toolbar_nav_view.setCheckedItem(R.id.go_to_manager_page)
-        home_toolbar_nav_view.setNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.go_to_manager_page -> {
-                    ManagerActivity.startManagerActivity(this)
+        if(isLogin) {
+            home_toolbar_nav_view.setCheckedItem(R.id.go_to_manager_page)
+            home_toolbar_nav_view.setNavigationItemSelectedListener {
+                when (it.itemId) {
+                    R.id.go_to_manager_page -> {
+                        ManagerActivity.startManagerActivity(this)
+                    }
+                    R.id.borrow_book -> {
+                        Toast.makeText(this, "clicked borrow book", Toast.LENGTH_SHORT).show()
+                    }
                 }
-                R.id.borrow_book -> {
-                    Toast.makeText(this,"clicked borrow book",Toast.LENGTH_SHORT).show()
-                }
+                true
             }
-            true
         }
     }
 
@@ -179,16 +188,36 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    private fun setNavMenu(){
+        if(isLogin) {
+            home_toolbar_nav_view.inflateMenu(R.menu.menu_home_nav_library)
+        }else{
+            home_toolbar_nav_view.inflateMenu(R.menu.menu_home_nav_no_login)
+        }
+    }
+
     private fun setNavHeaderUserName(){
-        val firebaseAuth = Firebase.auth
         val headerView = home_toolbar_nav_view.getHeaderView(0)
-        headerView.findViewById<TextView>(R.id.home_nav_header_title_name).text = firebaseAuth.currentUser.email
+        if(isLogin) {
+            val firebaseAuth = Firebase.auth
+            headerView.findViewById<TextView>(R.id.home_nav_header_title_name).text = firebaseAuth.currentUser.email
+        }else{
+            headerView.findViewById<TextView>(R.id.home_nav_header_title_name).text = "尚未登入哦！"
+        }
     }
 
     //將當前顯示的列表移動至最上方
     private fun initFloatingBtn(){
         home_floating_button_go_to_top.setOnClickListener {
             bookFrag.view?.findViewById<RecyclerView>(R.id.home_frag_book_list)?.smoothScrollToPosition(View.SCROLL_INDICATOR_TOP)
+        }
+    }
+    
+    companion object{
+        fun startHomeActivity(context : Context, isLogin : Boolean){
+            val intent = Intent(context,HomeActivity::class.java)
+            intent.putExtra("isLogin",isLogin)
+            context.startActivity(intent)
         }
     }
 }

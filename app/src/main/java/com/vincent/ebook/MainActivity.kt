@@ -12,11 +12,9 @@ import android.content.Context
 
 class MainActivity : AppCompatActivity() {
 
-    private val activity = this
     private val handler = object:Handler(Looper.getMainLooper()){
         override fun handleMessage(msg: Message) {
-            val intent = Intent(activity,HomeActivity::class.java)
-            startActivity(intent)
+            HomeActivity.startHomeActivity(this@MainActivity,intent.getBooleanExtra("isLogin",false))
             finish()
         }
     }
@@ -29,8 +27,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object{
-        fun startMainActivity(context : Context){
+        fun startMainActivity(context : Context, isLogin : Boolean){
             val intent = Intent(context,MainActivity::class.java)
+            intent.putExtra("isLogin",isLogin)
             context.startActivity(intent)
         }
     }

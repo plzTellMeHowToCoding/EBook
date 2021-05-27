@@ -68,8 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity = "start"
-        app:headerLayout="@layout/home_nav_header"
-        app:menu="@menu/menu_home_nav_library">
+        app:headerLayout="@layout/home_nav_header">
         <LinearLayout
             android:id="@+id/home_nav_add_library"
             android:layout_width="match_parent"
