@@ -200,7 +200,7 @@ class HomeActivity : AppCompatActivity() {
         val headerView = home_toolbar_nav_view.getHeaderView(0)
         if(isLogin) {
             val firebaseAuth = Firebase.auth
-            headerView.findViewById<TextView>(R.id.home_nav_header_title_name).text = firebaseAuth.currentUser.email
+            headerView.findViewById<TextView>(R.id.home_nav_header_title_name).text = firebaseAuth.currentUser?.email
         }else{
             headerView.findViewById<TextView>(R.id.home_nav_header_title_name).text = "尚未登入哦！"
         }

@@ -58,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
             val password = login_edit_password.text.toString()
                 if (!(email.isNullOrEmpty() || password.isNullOrEmpty())) {
                     firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
-                        if(firebaseAuth.currentUser.isEmailVerified){
+                        if(firebaseAuth.currentUser?.isEmailVerified!!){
                             if(it.isSuccessful) {
                                 MainActivity.startMainActivity(this,true)
                                 finish()

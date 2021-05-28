@@ -73,12 +73,12 @@ class RegisterActivity : AppCompatActivity() {
                     if(it.isSuccessful){
                         Log.d("TAG", "@@@@ createUserWithEmail:success")
                         val user = firebaseAuth.currentUser
-                        user.sendEmailVerification()
-                            .addOnCompleteListener {
+                        user?.sendEmailVerification()
+                            ?.addOnCompleteListener {
                                 if(it.isSuccessful){
                                     Log.d("TAG", "@@@@ sent email...")
                                 }
-                            }.addOnFailureListener {
+                            }?.addOnFailureListener {
                                 Log.d("TAG", "@@@@ email not sent... ")
                             }
                     }else{
