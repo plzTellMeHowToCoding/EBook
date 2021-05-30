@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.firebase.messaging.FirebaseMessaging
 import com.vincent.ebook.R
 import kotlinx.android.synthetic.main.frag_popup_book_detail_info.*
 
@@ -21,6 +22,14 @@ class PopupBookDetailInfoFragment : Fragment() {
     private fun processBorrowBook(){
         popup_book_detail_info_button_borrow.setOnClickListener {
             Log.d("TAG", "@@@@ click borrow button")
+            FirebaseMessaging.getInstance().token.addOnCompleteListener {
+                if(!it.isSuccessful){
+                    Log.d("TAG", "@@@@ get token failed ")
+                }
+
+                val token = it.result
+                Log.d("TAG", "@@@@ token = $token")
+            }
         }
     }
 
